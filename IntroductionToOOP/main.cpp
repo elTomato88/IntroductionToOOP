@@ -53,9 +53,27 @@ public:
 	{
 		cout << "X = " << get_x() << "\tY = " << get_y() << endl;
 	}
-};
-//#define STRUCT_POINT
 
+	//без координат второй точки должен показывать расстояние до начала координат
+	//sqrt - кв. корень
+	// sqrt((x2-x1)^2 + (y2-y1)^2);
+
+	double distance(const Point& target_point = {0,0}) // перегрузка, если есть аргумент? Point& ? 
+	{
+		double x_length = this->x - target_point.x;
+		double y_length = this->y - target_point.y;
+		double distance = sqrt(x_length * x_length + y_length * y_length);
+		return distance;
+	}
+	
+};
+double distance(const Point& first, const Point& second = {0,0});
+
+
+
+
+//#define STRUCT_POINT
+#define HOMEWORK
 int main()
 {
 	setlocale(LC_ALL, "");
@@ -74,7 +92,7 @@ int main()
 	Point* pA = &A; 
 	cout << pA->x << "\t" << pA->y;
 #endif // STRUCT_POINT
-	
+/*
 	Point A; // здесь неявно вызывается конструктор ПоУмолчанию
 			//поскольку мы создаем объект "по умолчанию"
 	//A.set_x(2);
@@ -86,16 +104,27 @@ int main()
 	//B.print();
 	Point C = {7,8};
 	//C.print();
-	
-
-/*
 	for (int i = 0; i < 10; i++)
 	{
 		cout << i << "\t";
 	}
 	cout << endl;
 */
-
-
+#ifdef HOMEWORK /*_____________________________________________*/
+	Point C = {7,8};
+	Point D = {7,9};
+	cout <<"distance from 0 to point C: "<< C.distance()<< endl;
+	cout <<"distance from C to point D: "<< C.distance(D)<< endl;
+	cout << "function_result:distance from C to point D: " << distance(C,D)<< endl;
+#endif
 	return 0;
+}
+
+
+double distance(const Point& first_point, const Point& second_point)
+{
+	double x_length = first_point.get_x() - second_point.get_x();
+	double y_length = first_point.get_y() - second_point.get_y();
+	double distance = sqrt(x_length * x_length + y_length * y_length);
+	return distance;
 }
