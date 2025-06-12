@@ -1,4 +1,4 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include<string>
 using namespace std;
 
@@ -7,12 +7,12 @@ class Fraction;
 Fraction operator+(const Fraction& left, const Fraction& right); //binary '+': 'Fraction' does not define this operator or a conversion to a type acceptable to the predefined operator
 Fraction operator-(const Fraction& left, const Fraction& right);
 Fraction operator*(const Fraction& left, const Fraction& right);
-Fraction operator/(const Fraction& left, const Fraction& right); // âðîäå ýòî ÷óäîâèùå ðàáîòàåò. 
+Fraction operator/(const Fraction& left, const Fraction& right); // Ð²Ñ€Ð¾Ð´Ðµ ÑÑ‚Ð¾ Ñ‡ÑƒÐ´Ð¾Ð²Ð¸Ñ‰Ðµ Ñ€Ð°Ð±Ð¾Ñ‚Ð°ÐµÑ‚. 
 class Fraction
 {
-	int integer; // çàäàåì öåëóþ ÷àñòü
-	int numerator; // çàäàåì ÷èñëèòåëü
-	int basis; //çàäàåì  çíàìåíàòåëü
+	int integer; // Ð·Ð°Ð´Ð°ÐµÐ¼ Ñ†ÐµÐ»ÑƒÑŽ Ñ‡Ð°ÑÑ‚ÑŒ
+	int numerator; // Ð·Ð°Ð´Ð°ÐµÐ¼ Ñ‡Ð¸ÑÐ»Ð¸Ñ‚ÐµÐ»ÑŒ
+	int basis; //Ð·Ð°Ð´Ð°ÐµÐ¼  Ð·Ð½Ð°Ð¼ÐµÐ½Ð°Ñ‚ÐµÐ»ÑŒ
 public:
 	int get_integer() const
 	{
@@ -44,7 +44,7 @@ public:
 	{
 		set_integer(0);
 		set_numerator(0);
-		set_basis(1); // Âîçìîæíî áóäóò îøèáêè ïðè äåëåíèè íà íîëü. ->1.
+		set_basis(1); // Ð’Ð¾Ð·Ð¼Ð¾Ð¶Ð½Ð¾ Ð±ÑƒÐ´ÑƒÑ‚ Ð¾ÑˆÐ¸Ð±ÐºÐ¸ Ð¿Ñ€Ð¸ Ð´ÐµÐ»ÐµÐ½Ð¸Ð¸ Ð½Ð° Ð½Ð¾Ð»ÑŒ. ->1.
 		cout << "Creating Complete: " << this<<endl;
 	}
 	Fraction(int integer, int numerator, int basis)
@@ -92,7 +92,7 @@ public:
 	{
 		return *this = *this / other;
 	}
-	Fraction& operator++() // íàäî óâåëè÷èòü íà +1 öåëîå
+	Fraction& operator++() // Ð½Ð°Ð´Ð¾ ÑƒÐ²ÐµÐ»Ð¸Ñ‡Ð¸Ñ‚ÑŒ Ð½Ð° +1 Ñ†ÐµÐ»Ð¾Ðµ
 	{
 		this->integer++; 
 		return *this;
@@ -117,19 +117,19 @@ public:
 		return buffer;
 	}
 	/*---------------Methods------------*/
-	Fraction& destroy_integer() // óáèðàåò öåëîå, çàïèñûâàåò â ÷èñëèòåëü.
+	Fraction& destroy_integer() // ÑƒÐ±Ð¸Ñ€Ð°ÐµÑ‚ Ñ†ÐµÐ»Ð¾Ðµ, Ð·Ð°Ð¿Ð¸ÑÑ‹Ð²Ð°ÐµÑ‚ Ð² Ñ‡Ð¸ÑÐ»Ð¸Ñ‚ÐµÐ»ÑŒ.
 	{
 		numerator += integer * basis;
 		integer = 0;
 		return *this;
 	}
-	Fraction& allocate_integer() // îáðàòíîå äåéñòâèå, âûäåëÿåì öåëîå
+	Fraction& allocate_integer() // Ð¾Ð±Ñ€Ð°Ñ‚Ð½Ð¾Ðµ Ð´ÐµÐ¹ÑÑ‚Ð²Ð¸Ðµ, Ð²Ñ‹Ð´ÐµÐ»ÑÐµÐ¼ Ñ†ÐµÐ»Ð¾Ðµ
 	{
 		integer = numerator / basis;
 		numerator = numerator % basis;
 		return *this;
 	}
-	double to_decimal() // ïðåâðàùàåì â äåñÿòè÷íóþ
+	double to_decimal() // Ð¿Ñ€ÐµÐ²Ñ€Ð°Ñ‰Ð°ÐµÐ¼ Ð² Ð´ÐµÑÑÑ‚Ð¸Ñ‡Ð½ÑƒÑŽ
 	{
 		double result = integer + (double)numerator / basis;
 		return result;
@@ -185,8 +185,8 @@ bool operator==(const Fraction& left, const Fraction& right)
 	int left_buffer = left.get_integer() * left.get_basis()+left.get_numerator();
 	int right_buffer = right.get_integer()*right.get_basis()+right.get_numerator();
 	//if((left_buffer== right_buffer)&&(left.get_basis()==right.get_basis()))  6/3 == 4/2 wrong
-	//if((left_buffer/left.get_basis()==right.buffer/right.get_basis()) ? ïëàâ òî÷êà wrong
-	// 6*2==4*3  1/2 è 3/6  1*6==2*3 8/2è 20/5 8*5 40  2*20 - 40 
+	//if((left_buffer/left.get_basis()==right.buffer/right.get_basis()) ? Ð¿Ð»Ð°Ð² Ñ‚Ð¾Ñ‡ÐºÐ° wrong
+	// 6*2==4*3  1/2 Ð¸ 3/6  1*6==2*3 8/2Ð¸ 20/5 8*5 40  2*20 - 40 
 	
 	return left_buffer*right.get_basis()==right_buffer*left.get_basis();
 }
@@ -196,13 +196,13 @@ bool operator!=(const Fraction& left, const Fraction& right)
 }
 bool operator>(const Fraction& left, const Fraction& right)
 {
-	int left_buffer = left.get_integer() * left.get_basis() + left.get_numerator(); // íóæåí ìåòîä
+	int left_buffer = left.get_integer() * left.get_basis() + left.get_numerator(); // Ð½ÑƒÐ¶ÐµÐ½ Ð¼ÐµÑ‚Ð¾Ð´
 	int right_buffer = right.get_integer() * right.get_basis() + right.get_numerator();
 	return left_buffer * right.get_basis() > right_buffer * left.get_basis();
 }
 bool operator<(const Fraction& left, const Fraction& right)
 {
-	//return !(left > right);   ìîæåò áûòü == 
+	//return !(left > right);   Ð¼Ð¾Ð¶ÐµÑ‚ Ð±Ñ‹Ñ‚ÑŒ == 
 	int left_buffer = left.get_integer() * left.get_basis() + left.get_numerator();
 	int right_buffer = right.get_integer() * right.get_basis() + right.get_numerator();
 	return left_buffer * right.get_basis() < right_buffer * left.get_basis();
@@ -224,7 +224,7 @@ int main()
 	test += test2;
 	++test3;
 	test = test3;
-	cout << test.get_integer()<<" "<< test.get_numerator() <<"/"<<test.get_basis()<< endl; // íóæåò ìåòîä íà âûâîä. 
+	cout << test.get_integer()<<" "<< test.get_numerator() <<"/"<<test.get_basis()<< endl; // Ð½ÑƒÐ¶ÐµÑ‚ Ð¼ÐµÑ‚Ð¾Ð´ Ð½Ð° Ð²Ñ‹Ð²Ð¾Ð´. 
 	test.console();
 	cout<<test.to_decimal()<<endl;
 	return 0;
