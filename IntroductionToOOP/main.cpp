@@ -1,5 +1,6 @@
 #include <iostream>
 using namespace std;
+#define delimiter "\n-------------------------------\n"
 
 class Point
 {
@@ -41,12 +42,26 @@ public:
 		this->y = y;
 		cout << "Constructor:\t\t" << this << endl;
 	}
+	//Point(const Point& other) = delete; // удлаяет конструктор копирования. Запрещает копировать объект. 
+	
+	Point(const Point& other)
+	{
+		this->x = other.x;
+		this->y = other.y;
+		cout << "CopyConstructor:\t" << this << endl;
+	}
+	
 	~Point()
 	{
 		cout << "Destructor:\t\t" << this << endl;
 	}
-
-
+	// Operators
+	void operator=(const Point& other)
+	{
+		this->x = other.x;
+		this->y = other.y;
+		cout << "CopyAssignment:\t\t" << this << endl;
+	}
 	//methods
 
 	void print()const
@@ -58,7 +73,7 @@ public:
 	//sqrt - кв. корень
 	// sqrt((x2-x1)^2 + (y2-y1)^2);
 
-	double distance(const Point& target_point = {0,0}) // перегрузка, если есть аргумент? Point& ? 
+	double distance(const Point& target_point = {0,0})const 
 	{
 		double x_length = this->x - target_point.x;
 		double y_length = this->y - target_point.y;
@@ -73,7 +88,8 @@ double distance(const Point& first, const Point& second = {0,0});
 
 
 //#define STRUCT_POINT
-#define HOMEWORK
+//#define HOMEWORK
+//#define ASSIGNMENT_CHECK
 int main()
 {
 	setlocale(LC_ALL, "");
@@ -117,6 +133,20 @@ int main()
 	cout <<"distance from C to point D: "<< C.distance(D)<< endl;
 	cout << "function_result:distance from C to point D: " << distance(C,D)<< endl;
 #endif
+
+	
+	
+	int a, b, c;
+	a = b = c = 0;
+	cout << a << "\t" << b << "\t" << c << "\t"<<endl;
+	cout << delimiter;
+	//Point(2,3); - явно вызываем конструктор и таким образом создаем временный безымянный объект. 
+	Point A, B, C;
+	A = B = C = { 2, 3 };
+	A.print();
+	B.print();
+	C.print();
+
 	return 0;
 }
 
@@ -127,4 +157,5 @@ double distance(const Point& first_point, const Point& second_point)
 	double y_length = first_point.get_y() - second_point.get_y();
 	double distance = sqrt(x_length * x_length + y_length * y_length);
 	return distance;
+	
 }
