@@ -227,5 +227,6 @@ int main()
 	cout << test.get_integer()<<" "<< test.get_numerator() <<"/"<<test.get_basis()<< endl; // нужет метод на вывод. 
 	test.console();
 	cout<<test.to_decimal()<<endl;
+
 	return 0;
 }
