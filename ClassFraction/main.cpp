@@ -1,6 +1,9 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 using namespace std;
+using std::cin;
+using std::cout;
+using std::endl;
 #define delimeter "\n-------------------------------\n"
 
 class Fraction;
@@ -45,11 +48,12 @@ public:
 		set_denominator(1); // Возможно будут ошибки при делении на ноль. ->1.
 		cout << "DefaultConstructor:\t" << this << endl;
 	}
-	Fraction(int integer)
+	explicit Fraction(int integer)
 	{
 		this->  integer=integer;
 		this->numerator = 0;
 		this->denominator = 1;
+		cout << "SingleArgumentConstructor" << endl;
 	}
 	Fraction(int numerator, int denominator)
 	{
@@ -107,7 +111,15 @@ public:
 		integer++;
 		return old;
 	}
-
+	// Type-cast operators
+	explicit operator int() const
+	{
+		return integer + numerator / denominator;
+	}
+	explicit operator double() const
+	{
+		return integer + (double)numerator / denominator;
+	}
 	//Methods
 	Fraction& to_improper()
 	{
@@ -199,7 +211,7 @@ std::istream& operator>>(std::istream& is,  Fraction& obj)
 	for (int i = 0; i < n; i++) cout << numbers[i] << "\t"; cout << endl;
 	switch (n)
 	{
-		case 1:obj = numbers[0]; break;
+		case 1:obj = Fraction(numbers[0]); break;
 		case 2:obj = Fraction(numbers[0], numbers[1]); break;
 		case 3:obj = Fraction(numbers[0], numbers[1], numbers[2]); break;
 	}
@@ -208,6 +220,7 @@ std::istream& operator>>(std::istream& is,  Fraction& obj)
 
 //#define CONSTRUCTORS_CHECK
 //#define ASSIGNMENT_CHECK
+//#define CONVERSION_FROM_OTHER_TO_CLASS
 int main()
 {
 #ifdef CONSTRUCTORS_CHECK
@@ -240,9 +253,25 @@ int main()
 	//одного выражения. 
 	cout << delimeter << endl;
 #endif // ASSIGNMENT_CHECK
+	/*
 	Fraction A;
 	cout << "Enter the Fraction: " << endl;
 	cin >> A;
 	cout << A<< endl;
+	*/
+#ifdef CONVERSION_FROM_OTHER_TO_CLASS
+	Fraction A = (Fraction)5;
+	cout << A << endl;
+	Fraction B;
+	B = (Fraction)8;
+	cout << B << endl;
 	return 0;
+#endif // CONVERSION_FROM_OTHER_TO_CLASS
+
+	Fraction A(2, 3, 4);
+	cout << A << endl;
+	int a = (int)A;
+	cout << a << endl;
+	double b = (double) A;
+	cout << b << endl;
 }
