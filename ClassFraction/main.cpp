@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 using namespace std;
 #define delimeter "\n-------------------------------\n"
@@ -183,11 +184,28 @@ std::ostream& operator<<(std::ostream& os, const Fraction& obj)
 	else if (obj.get_integer() == 0)os << 0;
 	return os;
 }
-std::istream& operator>>(std::istream& os, Fraction& obj) // 'return': cannot convert from 'std::istream' to 'std::ostream &'
+std::istream& operator>>(std::istream& is,  Fraction& obj)
 {
-	obj.set_integer(os.get);
-	return os;
+	//is- input stream
+	const int SIZE = 32;
+	char sz_input[SIZE] = {};
+	//is >> sz_input;
+	is.getline(sz_input, SIZE); // ввод строки с пробелами
+	const char delimeters[] = { '/', '(', ')', ' ', '.' , ',',  0};
+	int numbers[3] = {};
+	int n = 0;
+	for (char* pch = strtok(sz_input, delimeters); pch; pch = strtok(NULL, delimeters))
+		numbers[n++] = atoi(pch);
+	for (int i = 0; i < n; i++) cout << numbers[i] << "\t"; cout << endl;
+	switch (n)
+	{
+		case 1:obj = numbers[0]; break;
+		case 2:obj = Fraction(numbers[0], numbers[1]); break;
+		case 3:obj = Fraction(numbers[0], numbers[1], numbers[2]); break;
+	}
+	return is;
 }
+
 //#define CONSTRUCTORS_CHECK
 //#define ASSIGNMENT_CHECK
 int main()
@@ -225,5 +243,6 @@ int main()
 	Fraction A;
 	cout << "Enter the Fraction: " << endl;
 	cin >> A;
+	cout << A<< endl;
 	return 0;
 }
