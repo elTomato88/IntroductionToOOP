@@ -14,6 +14,10 @@ public:
 	{
 		return str;
 	}
+	char* get_str()
+	{
+		return str;
+	}
 	// constructors
 
 	explicit String(int size = 80)
@@ -24,6 +28,7 @@ public:
 	}
 	String(const char str[])
 	{
+		size = 0;
 		while (str[size++]);
 		this->str = new char[size] {};
 		for (int i = 0; str[i];i++)this->str[i] = str[i];
@@ -59,6 +64,14 @@ public:
 		cout << "CopyAssignment:\t" << this << endl;
 		return *this;
 	}
+	char operator[](int i)const
+	{
+		return str[i];
+	}
+	char& operator[](int i)
+	{
+		return str[i];
+	}
 	//methods
 	void info()const
 	{
@@ -66,31 +79,28 @@ public:
 		cout << "Str:\t" << str << endl;
 	}
 };
+
 std::ostream& operator<<(std::ostream& os, const String& obj)
 {
 	return os << obj.get_str();
 }
-char* operator+(const String& left, const String& right)
+
+String operator+(const String& left, const String& right)
 {
-	int size = left.get_size() + right.get_size();
-	cout << size << endl;
-	char* buffer = new char[size] {};
-	for (int i = 0; i < left.get_size(); i++)
-	{
-		buffer[i] = left.get_str()[i];
-	}
-	for (int i = 0; i < right.get_size(); i++)
-	{
-		buffer[i+ left.get_size()-1] = right.get_str()[i];
-		
-	}
-	
-	
-	return buffer;
+	String result (left.get_size() + right.get_size() - 1);
+	for (int i = 0; left.get_str()[i]; i++)
+		//result.get_str()[i] = left.get_str()[i];
+		result[i] = left[i];
+	for (int i = 0; right.get_str()[i];i++)
+		//result.get_str()[left.get_size()-1+i]=right.get_str()[i];
+		result[left.get_size() - 1 + i] = right[i];
+	return result;
 }
+//#define CONSTRUCTORS_CHECK
 void main()
 {
 	setlocale(LC_ALL, "");
+#ifdef CONSTRUCTORS_CHECK
 	String str1(5); // explicit  конструктор нельзя вызвать оператором присвоить, но всегда можно вызвать с круглыми скобками. 
 	str1.info();
 
@@ -99,8 +109,12 @@ void main()
 	String str3 = str2;
 	cout << str3 << endl;
 
-	String str4="World";
+	String str4 = "World";
 	String test = str4 + str2;
-	cout <<"Summ:"<< test << endl;
-
+	cout << "Summ:" << test << endl;
+#endif // CONSTRUCTORS_CHECK
+	String str1 = "HE0LO";
+	String str2 = "World";
+	String str3 = str1+" "+str2;
+	cout << str3 << endl;
 }
