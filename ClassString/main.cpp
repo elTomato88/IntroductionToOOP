@@ -1,3 +1,4 @@
+#include <Windows.h>
 #include <iostream>
 using namespace std;
 
@@ -84,6 +85,19 @@ std::ostream& operator<<(std::ostream& os, const String& obj)
 {
 	return os << obj.get_str();
 }
+std::istream& operator>>(std::istream& cin, String& obj)
+{
+	const int SIZE = 1024; // размер буфера 1 kБ
+	char buffer[SIZE] = {};
+	cin >> buffer;
+	obj = buffer;
+	return cin;
+}
+std::istream& getline(std::istream& cin, String& obj)
+{
+	cin.getline(obj.get_str(), obj.get_size());
+	return cin;
+}
 
 String operator+(const String& left, const String& right)
 {
@@ -97,6 +111,7 @@ String operator+(const String& left, const String& right)
 	return result;
 }
 //#define CONSTRUCTORS_CHECK
+//#define OPERATOR_PLUS
 void main()
 {
 	setlocale(LC_ALL, "");
@@ -113,8 +128,16 @@ void main()
 	String test = str4 + str2;
 	cout << "Summ:" << test << endl;
 #endif // CONSTRUCTORS_CHECK
+#ifdef OPERATOR_PLUS
 	String str1 = "HE0LO";
 	String str2 = "World";
-	String str3 = str1+" "+str2;
+	String str3 = str1 + " " + str2;
 	cout << str3 << endl;
+#endif // OPERATOR_PLUS
+	String str;
+	SetConsoleCP(1251);
+	cout << "ВВедите строку: "; 
+	getline(cin, str);
+	SetConsoleCP(866);
+	cout << str << endl;
 }
