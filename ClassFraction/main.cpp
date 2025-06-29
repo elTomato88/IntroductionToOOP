@@ -55,6 +55,15 @@ public:
 		this->denominator = 1;
 		cout << "SingleArgumentConstructor" << endl;
 	}
+	Fraction(double decimal)
+	{
+		decimal += 1e-10;
+		integer = decimal; // неявное преобразование данных
+		decimal -= integer;
+		denominator = 1e+9; // макс. возможное значение в числителе 9 десятч. разрядов
+		numerator = decimal * denominator;
+		reduce();
+	}
 	Fraction(int numerator, int denominator)
 	{
 		set_integer(0);
@@ -121,6 +130,30 @@ public:
 		return integer + (double)numerator / denominator;
 	}
 	//Methods
+	Fraction& reduce()
+	{
+		int more, less, rest;
+		if (numerator < denominator)
+		{
+			less = numerator;
+			more = denominator;
+		}
+		else
+		{
+			more = numerator;
+			less = denominator;
+		}
+		do
+		{
+			rest = more % less;
+			more = less;
+			less = rest;
+		} while (rest);
+		int GCD = more; //Greatest common divisor
+		numerator /= GCD;
+		denominator /= GCD;
+		return *this;
+	}
 	Fraction& to_improper()
 	{
 		numerator += integer * denominator;
@@ -152,6 +185,7 @@ public:
 		else if (!integer)cout << 0;
 		cout << endl;
 	}
+
 
 };
 Fraction operator*(Fraction left, Fraction right)
@@ -221,6 +255,7 @@ std::istream& operator>>(std::istream& is,  Fraction& obj)
 //#define CONSTRUCTORS_CHECK
 //#define ASSIGNMENT_CHECK
 //#define CONVERSION_FROM_OTHER_TO_CLASS
+//#define CONVERSIONS_FROM_CLASS_TO_OTHER
 int main()
 {
 #ifdef CONSTRUCTORS_CHECK
@@ -268,10 +303,16 @@ int main()
 	return 0;
 #endif // CONVERSION_FROM_OTHER_TO_CLASS
 
+#ifdef CONVERSIONS_FROM_CLASS_TO_OTHER
 	Fraction A(2, 3, 4);
 	cout << A << endl;
 	int a = (int)A;
 	cout << a << endl;
-	double b = (double) A;
+	double b = (double)A;
 	cout << b << endl;
+#endif // CONVERSIONS_FROM_CLASS_TO_OTHER
+
+
+	Fraction A = 2.76;
+	cout << A << endl;
 }
