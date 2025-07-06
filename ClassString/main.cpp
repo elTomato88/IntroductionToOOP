@@ -3,6 +3,7 @@
 using namespace std;
 
 #define delimeter "\n----------------------------\n"
+#define DEBUG
 class String
 {
 	int size; // размер строки в байтах
@@ -131,7 +132,7 @@ String operator+(const String& left, const String& right)
 	return result;
 }
 //#define CONSTRUCTORS_CHECK
-#define OPERATOR_PLUS
+//#define OPERATOR_PLUS
 //#define ISTREAM_OPERATOR
 void main()
 {
@@ -165,5 +166,21 @@ void main()
 	SetConsoleCP(866);
 	cout << str << endl;
 #endif // ISTREAM_OPERATOR
+	String str1;
+	str1.info();
+	String str2(8);
+	str2.info();
+	String str3 = "Hello"; // КОнструктор с одним параметром типа чар*
+	str3.info();
+	String str4(); // Не вызывается никкакой конструктор и не создается объект.
+	//Происходит объявление функции стринг, которая возвращает объект String
+	//Пустые скобки не делают явный вызов Default конструктора
+	//Если надо явно вызвать DefaCon, это можно сделать фигурными
+	String str5(8);
+	String str6{ 8 }; //АНалог верхней строке, так же вызывает конструкт.
+	String str7{}; // Явный вызов констуркии по умаолчанию
+	//{} СЛЕДУЕТ испльозвать с осторднолстьб 
+	String str9 = str3;
+	
 
 }
