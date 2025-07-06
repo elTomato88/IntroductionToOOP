@@ -2,6 +2,7 @@
 #include <iostream>
 using namespace std;
 
+#define delimeter "\n----------------------------\n"
 class String
 {
 	int size; // размер строки в байтах
@@ -46,6 +47,14 @@ public:
 		for (int i = 0; i < size; i++)this->str[i] = other.str[i];
 		cout << "CopyConstrucor:\t" << this << endl;
 	}
+	String(String&& other)
+	{
+		this->size = other.size;
+		this->str = other.str;
+		other.size = 0;
+		other.str = nullptr;// защищаем память от удаления Деструктором
+		cout << "MoveConstructor\n" << this << endl;
+	}
 	~String()
 	{
 		
@@ -63,6 +72,17 @@ public:
 		this->str = new char[size] {};
 		for (int i = 0; i < size; i++)this->str[i] = other.str[i];
 		cout << "CopyAssignment:\t" << this << endl;
+		return *this;
+	}
+	String& operator=(String&& other)
+	{
+		if (this == &other)return *this;
+		delete[] this->str;
+		this->size = other.size;
+		this->str = other.str;
+		other.size = 0;
+		other.str = nullptr;
+		cout << "MoveAssignment: \t\t" << this << endl;
 		return *this;
 	}
 	char operator[](int i)const
@@ -111,7 +131,8 @@ String operator+(const String& left, const String& right)
 	return result;
 }
 //#define CONSTRUCTORS_CHECK
-//#define OPERATOR_PLUS
+#define OPERATOR_PLUS
+//#define ISTREAM_OPERATOR
 void main()
 {
 	setlocale(LC_ALL, "");
@@ -129,15 +150,20 @@ void main()
 	cout << "Summ:" << test << endl;
 #endif // CONSTRUCTORS_CHECK
 #ifdef OPERATOR_PLUS
-	String str1 = "HE0LO";
+	String str1 = "HELLO";
 	String str2 = "World";
-	String str3 = str1 + " " + str2;
+	cout << delimeter << endl;
+	String str3 = str1 + str2;
+	cout << delimeter << endl;
 	cout << str3 << endl;
 #endif // OPERATOR_PLUS
+#ifdef ISTREAM_OPERATOR
 	String str;
 	SetConsoleCP(1251);
-	cout << "ВВедите строку: "; 
+	cout << "ВВедите строку: ";
 	getline(cin, str);
 	SetConsoleCP(866);
 	cout << str << endl;
+#endif // ISTREAM_OPERATOR
+
 }
